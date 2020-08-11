@@ -147,7 +147,7 @@ This is an optional object with which you may alter default behavior. You may al
 | `zoomOutElement` | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)       | `null` | _Optional_: An element to control zooming out. See the `Examples` section for more details. |
 | `zoomInElement`  | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)      | `null` | _Optional_:  An element to control zooming in. See the `Examples` section for more details. |
 
-### Example With Options
+### Example With `options` Parameter
 
 ```javascript
 const myImage = document.getElementById('myImage');
@@ -156,7 +156,7 @@ const options = {
   minScale: 1,
   maxScale: 10,
   speed: 10
-}
+};
 
 const myImageZoom = new ImageZoom(myImage, options);
 ```
