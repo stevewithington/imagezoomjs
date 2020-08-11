@@ -153,7 +153,7 @@ const config = {
 	plugins: plugins,
 	watch: !isProd,
 	watchOptions: {
-		ignored: ['node_modules/**', 'dist/**', 'lib/**', 'lib-esm/**'],
+		ignored: ['node_modules/**', 'dist/**', 'lib-esm/**'],
 	},
 };
 

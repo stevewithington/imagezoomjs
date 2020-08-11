@@ -1,6 +1,6 @@
 {
 	"name": "imagezoomjs",
-	"version": "7.0.0",
+	"version": "7.0.1",
 	"license": "MIT",
 	"access": "public",
 	"description": "my description",
@@ -10,8 +10,8 @@
 		"example": "examples"
 	},
 	"scripts": {
-		"tsc": "tsc && tsc -m es6 --outDir lib-esm",
-		"prebuild": "rimraf ./dist/* ./lib/* ./lib-esm/* && npm run tsc",
+		"tsc": "tsc && tsc -m es6 --outDir dist-esm",
+		"prebuild": "rimraf ./dist/* && npm run tsc",
 		"build": "npm run prebuild && WEBPACK_ENV=production webpack -p",
 		"dev": "npm run prebuild && WEBPACK_ENV=development webpack -p",
 		"check:format": "prettier --list-different \"./**/*.{ts,js,json,md}\"",
@@ -81,6 +81,6 @@
 		"webpack-cli": "^3.3.12",
 		"webpack-dashboard": "^3.2.0"
 	},
-	"main": "./lib/index.js",
-	"typings": "./lib/ImageZoom.d.ts"
+	"main": "./dist/index.js",
+	"typings": "./dist/ImageZoom.d.ts"
 }
