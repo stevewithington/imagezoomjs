@@ -1,0 +1,75 @@
+img {
+	max-width: 100%;;
+}
+
+.card {
+	max-width: 500px;
+	margin: 2em;
+}
+
+.card-img-top {
+	overflow: hidden;
+	background-color: lightgray;
+}
+
+.modal-image-wrapper {
+	overflow: hidden;
+}
+
+header,
+footer {
+	padding: 1em 0;
+}
+
+header {
+	margin: 0 0 2em 0;
+}
+
+footer {
+	margin: 2em 0 0 0;
+}
+
+i[data-zoom] {
+	padding: 1em 0;
+	cursor: pointer;
+}
+
+/* Custom Range Styling */
+input[type=range] {
+	position: static;
+	z-index: 2;
+	width: 100%;
+	height: 0.75em;
+	background: #007bff;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+			appearance: none;
+	border: none;
+	outline: none;
+	border-radius: 100vmax;
+	box-shadow: inset 3px 3px 5px -1px #666;
+	margin: 1em 0 2em 0;
+	padding: 0;
+}
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+			appearance: none;
+	width: 1.5em;
+	height: 1.5em;
+	background: #eee;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px -1px #000;
+	-webkit-transition: box-shadow 0.3s ease-in-out;
+	transition: box-shadow 0.3s ease-in-out;
+}
+input[type=range]:hover::-webkit-slider-thumb {
+	background: #f9f9f9;
+	box-shadow: 0px 0px 8px -1px #000;
+}
+input[type=range]::-ms-track {
+	width: 100%;
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}

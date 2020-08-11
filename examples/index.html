@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>ImageZoom.js</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<!-- See this file for minor style tweaks -->
+	<link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+
+	<header>
+		<nav class="navbar navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand h1" href="https://github.com/stevewithington/imagezoomjs">
+					ImageZoom.js
+				</a>
+
+				<a class="text-white" href="https://github.com/stevewithington/imagezoomjs">
+					<i class="fa fa-github-alt fa-1x" aria-hidden="true"></i>
+					<span class="sr-only">Github Project Link</span>
+				</a>
+			</div>
+		</nav>
+	</header>
+
+    <div class="container">
+
+      <!-- Bootstrap Card Example -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-img-top">
+              <img src="./assets/image-001.jpg">
+            </div>
+            <div class="card-body">
+
+				<div class="d-flex">
+					<div class="col-1">
+						<i data-zoom data-zoom-out class="fa fa-minus"></i>
+					</div>
+
+					<div class="col-10">
+						<input data-zoom-range type="range" class="form-control-range">
+					</div>
+
+					<div class="col-1">
+						<i data-zoom data-zoom-in class="fa fa-plus"></i>
+					</div>
+				</div>
+
+            	<h3 class="card-title">Bootstrap Card Example</h3>
+            	<p class="card-text">Move your mouse over the image and scroll/wheelzoom to zoom in and out.</p>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+					Launch Modal Example
+				</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Bootstrap Card Example -->
+    </div>
+    <!-- /.container -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Bootstrap Modal Example</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="modal-image-wrapper">
+						<!-- /assets/image-002.jpg -->
+						<img src="https://picsum.photos/2400/1200" class="modal-image" style="max-width: 100%;" />
+					</div>
+
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="d-flex">
+									<div class="col-1">
+										<i data-zoom data-zoom-out class="fa fa-minus"></i>
+									</div>
+
+									<div class="col-10">
+										<input data-zoom-range type="range" class="form-control-range">
+									</div>
+
+									<div class="col-1">
+										<i data-zoom data-zoom-in class="fa fa-plus"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.modal -->
+
+
+    <footer class="bg-secondary fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+			  <small>
+				<a class="text-white" href="https://github.com/stevewithington/imagezoomjs">
+					&copy; 2020 Stephen J. Withington, Jr.
+				</a>
+			</small>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <!-- ImageZoom.js -->
+	<script src="../dist/imagezoom.min.js"></script>
+
+	<script>
+		/**
+		 *  @Example: Bootstrap Card
+		 */
+		const cardImage = document.querySelector('.card-img-top img');
+		const cardRangeElement = document.querySelector('.card-body [data-zoom-range]');
+		const cardZoomInElement = document.querySelector('.card-body [data-zoom-in]');
+		const cardZoomOutElement = document.querySelector('.card-body [data-zoom-out]');
+
+		const cardOpts = {
+			rangeElement: cardRangeElement,
+			zoomInElement: cardZoomInElement,
+			zoomOutElement: cardZoomOutElement
+		};
+		const cardZoom = new ImageZoom(cardImage, cardOpts);
+
+
+		/**
+		 * @Example: Bootstrap Modal
+		 */
+		const modalImage = document.querySelector('.modal-body img');
+		const modalRangeElement = document.querySelector('.modal-body [data-zoom-range]');
+		const modalZoomInElement = document.querySelector('.modal-body [data-zoom-in]');
+		const modalZoomOutElement = document.querySelector('.modal-body [data-zoom-out]');
+		const modalOpts = {
+			rangeElement: modalRangeElement,
+			zoomInElement: modalZoomInElement,
+			zoomOutElement: modalZoomOutElement
+		};
+
+		const modalZoom = new ImageZoom(modalImage, modalOpts);
+	</script>
+  </body>
+</html>

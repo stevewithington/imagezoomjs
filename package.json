@@ -1,0 +1,86 @@
+{
+	"name": "imagezoomjs",
+	"version": "7.0.0",
+	"license": "MIT",
+	"access": "public",
+	"description": "my description",
+	"homnepage": "https://github.com/stevewithington/imagezoomjs/",
+	"author": "Steve Withington <steve@digitalmine.com> (https://www.digitalmine.com)",
+	"directories": {
+		"example": "examples"
+	},
+	"scripts": {
+		"tsc": "tsc && tsc -m es6 --outDir lib-esm",
+		"prebuild": "rimraf ./dist/* ./lib/* ./lib-esm/* && npm run tsc",
+		"build": "npm run prebuild && WEBPACK_ENV=production webpack -p",
+		"dev": "npm run prebuild && WEBPACK_ENV=development webpack -p",
+		"check:format": "prettier --list-different \"./**/*.{ts,js,json,md}\"",
+		"check:spelling": "cspell --config=.cspell.json \"**/*.{md,ts,js}\"",
+		"format": "prettier --write \"./**/*.{ts,js,json,md,css}\"",
+		"lint": "eslint . --ext .js,.ts",
+		"lint-rule-timings": "cross-env TIMING=1 yarn lint"
+	},
+	"eslintConfig": {
+		"env": {
+			"browser": true,
+			"es2020": true,
+			"node": true
+		}
+	},
+	"keywords": [
+		"wheelzoom",
+		"imagezoom",
+		"js",
+		"javascript",
+		"image",
+		"zoom",
+		"scale",
+		"drag"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/stevewithington/imagezoomjs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/stevewithington/imagezoomjs/issues"
+	},
+	"homepage": "https://github.com/stevewithington/imagezoomjs#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"@types/node": "^14.0.27",
+		"@types/prettier": "^2.0.2",
+		"@types/rimraf": "^3.0.0",
+		"@types/webpack": "^4.41.21",
+		"@typescript-eslint/eslint-plugin": "^3.7.1",
+		"@typescript-eslint/parser": "^3.7.1",
+		"cross-env": "^7.0.2",
+		"cspell": "^4.0.63",
+		"css-loader": "^4.2.1",
+		"cssnano": "^4.1.10",
+		"eslint": "^7.5.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-eslint-plugin": "^2.3.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"fibers": "^5.0.0",
+		"fork-ts-checker-notifier-webpack-plugin": "^3.0.0",
+		"fork-ts-checker-webpack-plugin": "^5.0.12",
+		"html-webpack-plugin": "^4.3.0",
+		"mini-css-extract-plugin": "^0.9.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"prettier": "^2.0.5",
+		"progress-bar-webpack-plugin": "^2.1.0",
+		"rimraf": "^3.0.2",
+		"sass": "^1.26.10",
+		"sass-loader": "^9.0.3",
+		"style-loader": "^1.2.1",
+		"terser-webpack-plugin": "^3.0.8",
+		"ts-loader": "^8.0.1",
+		"tslib": "^2.0.0",
+		"typescript": "^3.9.7",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12",
+		"webpack-dashboard": "^3.2.0"
+	},
+	"main": "./lib/index.js",
+	"typings": "./lib/ImageZoom.d.ts"
+}
