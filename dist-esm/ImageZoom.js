@@ -27,9 +27,10 @@ var ImageZoom = /** @class */ (function () {
             };
         };
         this._initInstance = function () {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return Object.assign({}, _this.canZoom(_this._state), _this.canPan(_this._state));
         };
-        this._initEvents = function () {
+        this._initEventListeners = function () {
             // Zoom In Element
             if (_this._options.zoomInElement) {
                 var el = _this._options.zoomInElement;
@@ -37,6 +38,7 @@ var ImageZoom = /** @class */ (function () {
                 _this.on(el, 'click', function () {
                     _this.zoomIn();
                 });
+                // Long press = continue zooming in
                 _this.on(el, 'mousedown', function () {
                     timerid_1 = setInterval(function () {
                         _this.zoomIn();
@@ -53,6 +55,7 @@ var ImageZoom = /** @class */ (function () {
                 _this.on(el, 'click', function () {
                     _this.zoomOut();
                 });
+                // Long press = continue zooming out
                 _this.on(el, 'mousedown', function () {
                     timerid_2 = setInterval(function () {
                         _this.zoomOut();
@@ -72,12 +75,13 @@ var ImageZoom = /** @class */ (function () {
                 el_1.defaultValue = el_1.min;
                 // Range Input Event Handler
                 _this.on(el_1, 'input', function () {
+                    // value from range input is stored as a string, convert to number for computation
                     var scaleFactor = Number(el_1.value);
                     var deltaScale = scaleFactor > _this._state.transformation.scale ? 1 : -1;
                     _this._zoom(deltaScale, scaleFactor);
                 });
             }
-            // Double Click = reset back to 0,0,1
+            // Double Click = Reset
             _this.on(_this._element, 'dblclick', function () {
                 _this._instance.panTo({
                     originX: 0,
@@ -103,7 +107,7 @@ var ImageZoom = /** @class */ (function () {
                     y: event.pageY
                 });
             });
-            // Shift Key + Mouse Move = drag/move
+            // Shift Key + Mouse Move = Drag/Move
             _this.on(_this._element, 'mousemove', function (event) {
                 if (!event.shiftKey) {
                     return;
@@ -123,42 +127,43 @@ var ImageZoom = /** @class */ (function () {
             var scaleFactor = _this._state.transformation.scale + (-1 / _this._options.speed);
             _this._zoom(-1, scaleFactor);
         };
-        this.canZoom = function (state) { return ({
-            zoom: function (_a) {
-                var x = _a.x, y = _a.y, deltaScale = _a.deltaScale;
-                var _b = state.element.getBoundingClientRect(), left = _b.left, top = _b.top;
-                var minScale = state.minScale, maxScale = state.maxScale, speed = state.speed;
-                var _c = __read(_this.getScale({ scale: state.transformation.scale, deltaScale: deltaScale, minScale: minScale, maxScale: maxScale, speed: speed }), 2), scale = _c[0], newScale = _c[1];
-                var originX = x - left;
-                var originY = y - top;
-                var newOriginX = originX / scale;
-                var newOriginY = originY / scale;
-                var translate = _this.getTranslate({ scale: scale, minScale: minScale, maxScale: maxScale });
-                var translateX = translate({ pos: originX, prevPos: state.transformation.originX, translate: state.transformation.translateX });
-                var translateY = translate({ pos: originY, prevPos: state.transformation.originY, translate: state.transformation.translateY });
-                // state.element.style.transformOrigin = `${newOriginX}px ${newOriginY}px`;
-                // If the image hasn't been scaled yet, assume we should scale from the center
-                state.element.style.transformOrigin =
-                    newOriginX === 0 && newOriginY === 0
-                        ? 'center'
-                        : newOriginX + "px " + newOriginY + "px";
-                state.element.style.transform = _this.getMatrix({ scale: newScale, translateX: translateX, translateY: translateY });
-                state.transformation = { originX: newOriginX, originY: newOriginY, translateX: translateX, translateY: translateY, scale: newScale };
-                state.bounds = state.element.getBoundingClientRect();
-                // Capture the Calculated Origin Point and store it for use elsewhere as needed
-                var newOrigins = state.element.style.transformOrigin;
-                var arrOrigins = newOrigins.split(' ');
-                arrOrigins.forEach(function (element, index, array) {
-                    var temp = element.replace('px', '');
-                    array[index] = Number(temp);
-                });
-                _this._originPoint = {
-                    x: arrOrigins[0],
-                    y: arrOrigins[1]
-                };
-                _this._updateRangeValue();
-            }
-        }); };
+        this.canZoom = function (state) {
+            return ({
+                zoom: function (_a) {
+                    var x = _a.x, y = _a.y, deltaScale = _a.deltaScale;
+                    var _b = state.element.getBoundingClientRect(), left = _b.left, top = _b.top;
+                    var minScale = state.minScale, maxScale = state.maxScale, speed = state.speed;
+                    var _c = __read(_this.getScale({ scale: state.transformation.scale, deltaScale: deltaScale, minScale: minScale, maxScale: maxScale, speed: speed }), 2), scale = _c[0], newScale = _c[1];
+                    var originX = x - left;
+                    var originY = y - top;
+                    var newOriginX = originX / scale;
+                    var newOriginY = originY / scale;
+                    var translate = _this.getTranslate({ scale: scale, minScale: minScale, maxScale: maxScale });
+                    var translateX = translate({ pos: originX, prevPos: state.transformation.originX, translate: state.transformation.translateX });
+                    var translateY = translate({ pos: originY, prevPos: state.transformation.originY, translate: state.transformation.translateY });
+                    // If the image hasn't been scaled yet, assume we should scale from the center
+                    state.element.style.transformOrigin =
+                        newOriginX === 0 && newOriginY === 0
+                            ? 'center'
+                            : newOriginX + "px " + newOriginY + "px";
+                    state.element.style.transform = _this.getMatrix({ scale: newScale, translateX: translateX, translateY: translateY });
+                    state.transformation = { originX: newOriginX, originY: newOriginY, translateX: translateX, translateY: translateY, scale: newScale };
+                    state.bounds = state.element.getBoundingClientRect();
+                    // Capture the Calculated Origin Point and store it for use elsewhere as needed
+                    var newOrigins = state.element.style.transformOrigin;
+                    var arrOrigins = newOrigins.split(' ');
+                    arrOrigins.forEach(function (element, index, array) {
+                        var temp = element.replace('px', '');
+                        array[index] = Number(temp);
+                    });
+                    _this._originPoint = {
+                        x: arrOrigins[0],
+                        y: arrOrigins[1]
+                    };
+                    _this._updateRangeValue();
+                }
+            });
+        };
         this.pan = function (_a) {
             var state = _a.state, originX = _a.originX, originY = _a.originY;
             state.transformation.translateX += originX;
@@ -170,24 +175,26 @@ var ImageZoom = /** @class */ (function () {
                     translateY: state.transformation.translateY
                 });
         };
-        this.canPan = function (state) { return ({
-            panBy: function (_a) {
-                var originX = _a.originX, originY = _a.originY;
-                return _this.pan({ state: state, originX: originX, originY: originY });
-            },
-            panTo: function (_a) {
-                var originX = _a.originX, originY = _a.originY, scale = _a.scale;
-                state.transformation.scale = scale;
-                _this.pan({
-                    state: state,
-                    originX: originX - state.transformation.translateX,
-                    originY: originY - state.transformation.translateY
-                });
-            },
-        }); };
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        this.canPan = function (state) {
+            return ({
+                panBy: function (_a) {
+                    var originX = _a.originX, originY = _a.originY;
+                    return _this.pan({ state: state, originX: originX, originY: originY });
+                },
+                panTo: function (_a) {
+                    var originX = _a.originX, originY = _a.originY, scale = _a.scale;
+                    state.transformation.scale = scale;
+                    _this.pan({
+                        state: state,
+                        originX: originX - state.transformation.translateX,
+                        originY: originY - state.transformation.translateY
+                    });
+                },
+            });
+        };
         this.getMatrix = function (_a) {
             var scale = _a.scale, translateX = _a.translateX, translateY = _a.translateY;
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             return "matrix(" + scale + ", 0, 0, " + scale + ", " + translateX + ", " + translateY + ")";
         };
         this.getScale = function (_a) {
@@ -195,7 +202,6 @@ var ImageZoom = /** @class */ (function () {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             var newScale = scale + (deltaScale / (speed / scale));
             newScale = Math.max(minScale, Math.min(newScale, maxScale));
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return [_this._round(scale), _this._round(newScale)];
         };
         this.valueInRange = function (_a) {
@@ -210,19 +216,24 @@ var ImageZoom = /** @class */ (function () {
             var minScale = _a.minScale, maxScale = _a.maxScale, scale = _a.scale;
             return function (_a) {
                 var pos = _a.pos, prevPos = _a.prevPos, translate = _a.translate;
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                /* eslint-disable-next-line @typescript-eslint/no-unsafe-return*/
                 return _this.valueInRange({ minScale: minScale, maxScale: maxScale, scale: scale })
                     && _this.hasPositionChanged({ pos: pos, prevPos: prevPos })
-                    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                     ? (translate + ((pos - prevPos) * scale)) * ((1 - 1) / scale)
                     : translate;
             };
         };
+        this.getTouchPointsDistance = function (touches) {
+            var touch0 = touches[0];
+            var touch1 = touches[1];
+            return Math.sqrt(Math.pow(touch1.pageX - touch0.pageX, 2) + Math.pow(touch1.pageY - touch0.pageY, 2));
+        };
+        // Custom Event Registration Method, ensures eventListeners are also removed ;)
         this.on = function (target, type, listener, options) {
-            if (options === void 0) { options = false; }
-            target.addEventListener(type, listener, options);
+            var opts = options ? options : _this._passiveSupportOption();
+            target.addEventListener(type, listener, opts);
             return function () {
-                target.removeEventListener(type, listener, options);
+                target.removeEventListener(type, listener, opts);
             };
         };
         this._zoom = function (deltaScale, scaleFactor) {
@@ -264,13 +275,16 @@ var ImageZoom = /** @class */ (function () {
                 translateY: translateY,
                 scale: scaleFactor,
             };
+            // Ensure range input updated after transformations
             _this._updateRangeValue();
         };
         this._updateRangeValue = function () {
             // Update Range Input
             if (_this._options.rangeElement) {
                 var el = _this._options.rangeElement;
+                // Range input values are strings, so we need to convert the numeric scale back to a string
                 var scale = _this._round(_this._state.transformation.scale).toString();
+                // No need to update the value if it's the same
                 if (el.value !== scale) {
                     el.value = scale;
                 }
@@ -280,6 +294,32 @@ var ImageZoom = /** @class */ (function () {
             if (digits === void 0) { digits = 2; }
             return Number(Math.round(+(num + 'e' + digits)) + 'e-' + digits);
         };
+        this._initPassiveSupport = function () {
+            var supported = false;
+            var options = {};
+            try {
+                options = {
+                    get passive() {
+                        supported = true;
+                        return null;
+                    }
+                };
+                var callback = function () {
+                    return null;
+                };
+                window.addEventListener('IZTest', callback, options);
+                window.removeEventListener('IZTest', callback, options);
+            }
+            catch (err) {
+                supported = false;
+            }
+            ;
+            return supported;
+        };
+        this._passiveSupportOption = function (usePassive) {
+            if (usePassive === void 0) { usePassive = false; }
+            return _this._isPassiveSupported ? { passive: usePassive } : usePassive;
+        };
         this._element = element;
         this._options = __assign(__assign({}, this.defaults), options);
         this._originPoint = {
@@ -287,8 +327,9 @@ var ImageZoom = /** @class */ (function () {
             y: 0,
         };
         this._state = this._initState();
+        this._isPassiveSupported = this._initPassiveSupport();
         this._instance = this._initInstance();
-        this._initEvents();
+        this._initEventListeners();
     }
     return ImageZoom;
 }());

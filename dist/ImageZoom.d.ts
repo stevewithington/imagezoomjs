@@ -36,36 +36,21 @@ export default class ImageZoom {
     _options: IOptions;
     _state: IState;
     _originPoint: IPoint;
+    _isPassiveSupported: boolean;
     defaults: IOptions;
     constructor(element: HTMLElement, options?: {});
     _initState: () => IState;
     _initInstance: () => IInstance;
-    _initEvents: () => any;
+    _initEventListeners: () => void;
     zoomIn: () => void;
     zoomOut: () => void;
-    canZoom: (state: IState) => {
-        zoom: ({ x, y, deltaScale }: {
-            x: any;
-            y: any;
-            deltaScale: any;
-        }) => void;
-    };
+    canZoom: (state: IState) => any;
     pan: ({ state, originX, originY }: {
         state: any;
         originX: any;
         originY: any;
     }) => void;
-    canPan: (state: IState) => {
-        panBy: ({ originX, originY }: {
-            originX: any;
-            originY: any;
-        }) => void;
-        panTo: ({ originX, originY, scale }: {
-            originX: any;
-            originY: any;
-            scale: any;
-        }) => void;
-    };
+    canPan: (state: IState) => any;
     getMatrix: ({ scale, translateX, translateY }: {
         scale: any;
         translateX: any;
@@ -77,7 +62,7 @@ export default class ImageZoom {
         maxScale: any;
         speed: any;
         deltaScale: any;
-    }) => number[];
+    }) => any;
     valueInRange: ({ minScale, maxScale, scale }: {
         minScale: any;
         maxScale: any;
@@ -91,13 +76,14 @@ export default class ImageZoom {
         minScale: any;
         maxScale: any;
         scale: any;
-    }) => ({ pos, prevPos, translate }: {
-        pos: any;
-        prevPos: any;
-        translate: any;
     }) => any;
-    on: (target: any, type: any, listener: any, options?: boolean) => () => void;
+    getTouchPointsDistance: (touches: any) => number;
+    on: (target: EventTarget, type: string, listener: EventListener, options?: any) => EventListener;
     _zoom: (deltaScale: number, scaleFactor?: number) => void;
     _updateRangeValue: () => void;
     _round: (num: number, digits?: number) => number;
+    _initPassiveSupport: () => boolean;
+    _passiveSupportOption: (usePassive?: boolean) => boolean | {
+        passive: boolean;
+    };
 }
