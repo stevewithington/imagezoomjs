@@ -117,11 +117,29 @@ const options = {
 const myImageZoom = new ImageZoom(myImage, options);
 ```
 
-## Options
+## Syntax & Parameters
+
+The `ImageZoom` class constructor accepts up to two parameters: `element` and `options`.
+
+```javascript
+const imageZoom = new ImageZoom(element, [, options]); // -> returns ImageZoom object
+```
+
+### `element` Parameter
+
+This is the `element` you wish to target for zooming/scaling functionality.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `minScale `      | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)          | `1`    | The minimum scale to which the image can be zoomed. `1` = 100%, `2` = 200%, etc. |
+| `element`        | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) _or_ [HTMLImageElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement)     | `null` | The target `element` or `image` to enable zooming/scaling functionality on. |
+
+### `options` Parameter
+
+This is an optional object with which you may alter default behavior. You may also pass in optional elements which may be enabled to control zooming/scaling of the primary element.
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `minScale`      | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)          | `1`    | The minimum scale to which the image can be zoomed. `1` = 100%, `2` = 200%, etc. |
 | `maxScale`       | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)          | `10`   | The maximum scale to which the image can be zoomed. `5` = 500%, `10` = 1000%, etc.  |
 | `speed`          | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)           | `10`   | Speed (or scale sensitivity) with which the image will be scaled. Measured in relative units. The larger the value, the smaller the increments between each step. |
 | `element`        | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) _or_ [HTMLImageElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement)     | `null` | The target `element` or `image` to enable zooming/scaling functionality on. |
@@ -129,12 +147,19 @@ const myImageZoom = new ImageZoom(myImage, options);
 | `zoomOutElement` | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)       | `null` | _Optional_: An element to control zooming out. See the `Examples` section for more details. |
 | `zoomInElement`  | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)      | `null` | _Optional_:  An element to control zooming in. See the `Examples` section for more details. |
 
-## API
+### Example With Options
 
-| Method      | Description                               |
-|-------------|-------------------------------------------|
-| .zoomIn()   | Zoom in one step (see option `speed`)     |
-| .zoomOut()  | Zoom out one step (see option `speed`)    |
+```javascript
+const myImage = document.getElementById('myImage');
+
+const options = {
+  minScale: 1,
+  maxScale: 10,
+  speed: 10
+}
+
+const myImageZoom = new ImageZoom(myImage, options);
+```
 
 ## Contributors
 
