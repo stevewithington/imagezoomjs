@@ -2,7 +2,7 @@ export interface IOptions {
     minScale: number;
     maxScale: number;
     speed: number;
-    element?: HTMLElement;
+    element?: HTMLElement | HTMLImageElement;
     rangeElement?: HTMLInputElement;
     zoomOutElement?: HTMLElement;
     zoomInElement?: HTMLElement;
@@ -13,7 +13,7 @@ export interface IInstance {
     zoom: any;
 }
 export interface IState {
-    element: HTMLElement;
+    element: HTMLElement | HTMLImageElement;
     maxScale: number;
     minScale: number;
     speed: number;
@@ -32,13 +32,13 @@ export interface IPoint {
 }
 export default class ImageZoom {
     _instance: IInstance;
-    _element: HTMLElement;
+    _element: HTMLElement | HTMLImageElement;
     _options: IOptions;
     _state: IState;
     _originPoint: IPoint;
     _isPassiveSupported: boolean;
     defaults: IOptions;
-    constructor(element: HTMLElement, options?: {});
+    constructor(element: HTMLElement | HTMLImageElement, options?: {});
     _initState: () => IState;
     _initInstance: () => IInstance;
     _initEventListeners: () => void;
