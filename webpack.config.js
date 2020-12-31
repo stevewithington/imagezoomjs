@@ -3,12 +3,11 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 // https://github.com/johnnyreilly/fork-ts-checker-notifier-webpack-plugin#usage
-const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
+// if using, run `npm i -D fork-ts-checker-notifier-webpack-plugin` first!
+// const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#options
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// https://github.com/clessg/progress-bar-webpack-plugin#usage
-// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // https://github.com/SassNinja/media-query-plugin
 // https://github.com/mike-diamond/media-query-splitting-plugin
 // https://www.npmjs.com/package/webpack-dashboard
@@ -32,9 +31,7 @@ const PATHS = {
 if (mode === 'production') {
 	// production plugins
 	plugins.push(
-		new webpack.NoEmitOnErrorsPlugin(),
-		new webpack.NamedChunksPlugin(),
-		new webpack.NamedModulesPlugin(),
+		new webpack.NamedChunksPlugin()
 	);
 } else {
 	// development plugins
@@ -47,13 +44,14 @@ if (mode === 'production') {
 			},
 		}),
 
-		new ForkTsCheckerNotifierWebpackPlugin({
-			title: 'TypeScript',
-			excludeWarnings: true,
-			alwaysNotify: true,
-			skipFirstNotification: false,
-			skipSuccessful: false,
-		}),
+		// if using, run `npm i -D fork-ts-checker-notifier-webpack-plugin` first and then uncomment the plugin above
+		// new ForkTsCheckerNotifierWebpackPlugin({
+		// 	title: 'TypeScript',
+		// 	excludeWarnings: true,
+		// 	alwaysNotify: true,
+		// 	skipFirstNotification: false,
+		// 	skipSuccessful: false,
+		// }),
 
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	);
