@@ -1,0 +1,29 @@
+name: NPM Publish
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1.4.0
+        with:
+          node-version: 12
+
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
+
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          registry: https://registry.npmjs.org/
+          package: ./package.json
+          tag: "latest"
+          access: "public"
+          dry-run: false
+          check-version: true
